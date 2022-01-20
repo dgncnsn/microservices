@@ -1,0 +1,42 @@
+version: '3.4'
+
+services:
+  postgres:
+    container_name: postgres_container
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=admin
+    volumes:
+      - ./postgres-data:/var/lib/postgresql/data
+    ports:
+      - '5432:5432'
+
+  pgadmin:
+    container_name: pgadmin_container
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-pgadmin4@pgadmin.org}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-admin}
+      PGADMIN_CONFIG_SERVER_MODE: 'False'
+    volumes:
+      - ./pgadmin:/var/lib/pgadmin
+    ports:
+      - "${PGADMIN_PORT:-5050}:80"
+
+  mongodb:
+    container_name: mongodb_container
+    volumes:
+      - ~/mongodb/db:/data/db
+    ports:
+      - "27018:27017"
+
+  rabbitMq:
+    container_name: rabbitMQ_container
+    hostname: "meteksan_rabbitmq"
+    volumes:
+      - "./enabled_plugins:/etc/rabbitmq/enabled_plugins"
+    ports:
+      - '15672:15672'
+      - '5672:5672'
+      - '61613:61613'
+      - '15671:15671'

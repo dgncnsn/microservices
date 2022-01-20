@@ -1,0 +1,14 @@
+version: '3.4'
+
+services:
+  postgres:
+    image: postgres:latest
+
+  pgadmin:
+    image: dpage/pgadmin4
+
+  mongodb:
+    image: mongo:latest
+
+  rabbitMq:
+    image: "rabbitmq:3-management"
